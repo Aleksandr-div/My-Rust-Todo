@@ -1,4 +1,3 @@
-  GNU nano 8.7.1         src/main.rs          Modified
 use std::io::{self, Write};
 use std::fs::OpenOptions;
 
