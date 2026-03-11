@@ -1,3 +1,4 @@
+  GNU nano 8.7.1         src/main.rs          Modified
 use std::io::{self, Write};
 use std::fs::OpenOptions;
 
@@ -11,9 +12,11 @@ fn main() {
         answer.clear();
 
         println!("Choose option: ");
-        println!("1. Add todo\n2. Delete todo\n3. Show my todos\n");
+        println!("1. Add todo\n2. Delete todo\n3. Show m
+y todos\n");
 
-        io::stdin().read_line(&mut answer).expect("Error");
+        io::stdin().read_line(&mut answer).expect("Error
+");
 
         if answer.trim() == "3" {
             if vec.is_empty() {
@@ -22,7 +25,7 @@ fn main() {
             }
 
             for (i, value) in vec.iter().enumerate() {
-                println!("{}: {}\n", i + 1, value);
+                println!("{}. {}", i + 1, value);
             }
 
         } else if answer.trim() == "2" {
@@ -32,33 +35,42 @@ fn main() {
             }
 
             for (i, value) in vec.iter().enumerate() {
-                println!("\n{}. {}", i + 1, value);
+                println!("{}. {}", i + 1, value);
             }
 
             answer.clear();
             println!("Enter todo to delete: \n");
-            io::stdin().read_line(&mut answer).expect("Error");
+            io::stdin().read_line(&mut answer).expect("E
+rror");
+            let mut parsed = answer.trim().parse::<usize
+>().unwrap_or(0);
 
-            if answer.trim().parse::<usize>().unwrap_or(0) > 0 {
-                vec.remove(answer.trim().parse::<usize>().expect("Error") - 1);
-                
+            if vec.is_empty() {
+                println!("\nThats nothing to do!");
+                continue;
+            }  
+
+            if parsed > 0 && parsed <= vec.len() {
+                vec.remove(parsed - 1);
+
             } else {
-                vec.remove(0);
+                println!("\nTodo doesn't exists!");
             }
 
         } else if answer.trim() == "1" {
             println!("Enter todo: \n");
-            io::stdin().read_line(&mut todo).expect("Error");
+            io::stdin().read_line(&mut todo).expect("Err
+or");
             vec.push(todo.clone().trim().to_string());
 
             let mut file = OpenOptions::new()
-                .write(true)
+                .append(true)
                 .create(true)
-                .read(true)
                 .open("db.txt")
                 .expect("Error");
-            writeln!(file, "{}", todo.clone()).expect("Error");
-            println!("Sucssesful!\n")
+            writeln!(file, "{}", todo.clone().trim()).ex
+pect("Error");
+            println!("Sucssesful!\n");
         }
     }
 }
