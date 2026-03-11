@@ -11,11 +11,9 @@ fn main() {
         answer.clear();
 
         println!("Choose option: ");
-        println!("1. Add todo\n2. Delete todo\n3. Show m
-y todos\n");
+        println!("1. Add todo\n2. Delete todo\n3. Show my todos\n");
 
-        io::stdin().read_line(&mut answer).expect("Error
-");
+        io::stdin().read_line(&mut answer).expect("Error");
 
         if answer.trim() == "3" {
             if vec.is_empty() {
@@ -39,15 +37,13 @@ y todos\n");
 
             answer.clear();
             println!("Enter todo to delete: \n");
-            io::stdin().read_line(&mut answer).expect("E
-rror");
-            let mut parsed = answer.trim().parse::<usize
->().unwrap_or(0);
+            io::stdin().read_line(&mut answer).expect("Error");
+            let mut parsed = answer.trim().parse::<usize>().unwrap_or(0);
 
             if vec.is_empty() {
                 println!("\nThats nothing to do!");
                 continue;
-            }  
+            }
 
             if parsed > 0 && parsed <= vec.len() {
                 vec.remove(parsed - 1);
@@ -58,8 +54,7 @@ rror");
 
         } else if answer.trim() == "1" {
             println!("Enter todo: \n");
-            io::stdin().read_line(&mut todo).expect("Err
-or");
+            io::stdin().read_line(&mut todo).expect("Error");
             vec.push(todo.clone().trim().to_string());
 
             let mut file = OpenOptions::new()
@@ -67,8 +62,7 @@ or");
                 .create(true)
                 .open("db.txt")
                 .expect("Error");
-            writeln!(file, "{}", todo.clone().trim()).ex
-pect("Error");
+            writeln!(file, "{}", todo.clone().trim()).expect("Error");
             println!("Sucssesful!\n");
         }
     }
